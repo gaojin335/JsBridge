@@ -44,11 +44,11 @@
                     service
                     , {'actionName': action, 'arguments': args}
                     , function (responseData) {
-                        var respJO = val(responseData);
-                        if (equals(respJO.callbackName, "success")) {
-                            success(respJO.data);
+                        var respDataJO = eval("(" + responseData + ")");
+                        if (respDataJO.callbackName == "success") {
+                            success(respDataJO.data);
                         } else {
-                            error(respJO.data);
+                            error(respDataJO.data);
                         }
                     }
                 );
