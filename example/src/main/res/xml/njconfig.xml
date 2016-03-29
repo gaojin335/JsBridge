@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget>
+
+    <feature name="TestPlugin">
+        <param value="com.github.lzyzsd.jsbridge.example.plugin.TestPlugin" />
+    </feature>
+
+</widget>

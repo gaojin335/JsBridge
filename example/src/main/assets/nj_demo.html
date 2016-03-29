@@ -1,0 +1,127 @@
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>
+        js调用java
+    </title>
+</head>
+
+<body>
+<p>
+    <xmp id="show">
+    </xmp>
+</p>
+<p>
+    <xmp id="init">
+    </xmp>
+</p>
+<p>
+    <input type="text" id="text1" value="用户名(username)"/>
+</p>
+
+<p>
+    <input type="text" id="text2" value="password"/>
+</p>
+
+<p>
+    <input type="button" id="enter" value="发消息给Native" onclick="testClick();"
+            />
+</p>
+
+<p>
+    <input type="button" id="enter1" value="调用Native方法" onclick="testClick1();"
+            />
+</p>
+
+<p>
+    <input type="button" id="enter1_2" value="调用Native方法2" onclick="testClick2();"
+            />
+</p>
+
+<p>
+    <input type="button" id="enter2" value="显示html" onclick="testDiv();"/>
+</p>
+
+<p>
+    <input type="file" value="打开文件"/>
+</p>
+</body>
+<script>
+    function DicAPI() {}
+
+    DicAPI.prototype.test1 = function () {
+        window.NJBridge.exec(
+                function(success){alert(success);},
+                function(error){alert(error);},
+                "TestPlugin",
+                "action1",
+                ["张三", 18]
+        );
+    }
+
+    DicAPI.prototype.test2 = function () {
+        window.NJBridge.exec(
+                function(success){alert(success);},
+                function(error){alert(error);},
+                "TestPlugin",
+                "action2",
+                ["李四", 28]
+        );
+    }
+
+    if(!window.plugins) {
+        window.plugins = {};
+    }
+    window.plugins.DicAPI = new DicAPI();
+
+    function connectWebViewJavascriptBridge(callback) {
+        if (!window.NJBridge) {
+            document.addEventListener(
+                    'deviceready'
+                    , function () {
+                        callback(window.NJBridge);
+                    },
+                    false
+            );
+        }
+    }
+    connectWebViewJavascriptBridge(function(njBridge){
+        // 框架初始化完成调用插件能力
+        alert("device ready");
+        window.plugins.DicAPI.test1();
+    });
+
+
+    function testDiv() {
+        document.getElementById("show").innerHTML = document.getElementsByTagName("html")[0].innerHTML;
+    }
+
+    function testClick() {
+        var str1 = document.getElementById("text1").value;
+        var str2 = document.getElementById("text2").value;
+
+        //send message to native
+        var data = {id: 1, content: "这是一个图片 <img src=\"a.png\"/> test\r\nhahaha"};
+        window.WebViewJavascriptBridge.send(
+                data
+                , function (responseData) {
+                    document.getElementById("show").innerHTML = "repsonseData from java, data = " + responseData
+                }
+        );
+
+    }
+
+    function testClick1() {
+        window.plugins.DicAPI.test1();
+    }
+
+    function testClick2() {
+        window.plugins.DicAPI.test2();
+    }
+
+    function bridgeLog(logContent) {
+        document.getElementById("show").innerHTML = logContent;
+    }
+</script>
+
+</html>

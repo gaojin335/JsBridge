@@ -77,7 +77,17 @@ public class MainActivity extends Activity implements OnClickListener {
 			@Override
 			public void handler(String data, CallBackFunction function) {
 				Log.i(TAG, "handler = submitFromWeb, data from web = " + data);
-                function.onCallBack("submitFromWeb exe, response data 中文 from Java");
+				function.onCallBack("submitFromWeb exe, response data 中文 from Java");
+			}
+
+		});
+
+		webView.registerHandler("submitFromWeb2", new BridgeHandler() {
+
+			@Override
+			public void handler(String data, CallBackFunction function) {
+				Log.i(TAG, "handler = submitFromWeb2, data from web = " + data);
+				function.onCallBack("submitFromWeb2 exe, response data 中文 from Java");
 			}
 
 		});
