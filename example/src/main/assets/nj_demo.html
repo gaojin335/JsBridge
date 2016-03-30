@@ -46,13 +46,20 @@
     <input type="file" value="打开文件"/>
 </p>
 </body>
+<script type="text/javascript" src="./WebViewJavascriptBridge.js"></script>
+<script type="text/javascript" src="./NJBridge.js"></script>
 <script>
     function DicAPI() {}
 
     DicAPI.prototype.test1 = function () {
+        // 调用原生代码
         window.NJBridge.exec(
-                function(success){alert(success);},
-                function(error){alert(error);},
+                function(success){
+                    alert(success);
+                },
+                function(error){
+                    alert(error);
+                },
                 "TestPlugin",
                 "action1",
                 ["张三", 18]
@@ -61,8 +68,12 @@
 
     DicAPI.prototype.test2 = function () {
         window.NJBridge.exec(
-                function(success){alert(success);},
-                function(error){alert(error);},
+                function(success){
+                    alert(success);
+                },
+                function(error){
+                    alert(error);
+                },
                 "TestPlugin",
                 "action2",
                 ["李四", 28]
@@ -75,7 +86,9 @@
     window.plugins.DicAPI = new DicAPI();
 
     function connectWebViewJavascriptBridge(callback) {
-        if (!window.NJBridge) {
+        if (window.NJBridge) {
+            callback(window.NJBridge);
+        } else {
             document.addEventListener(
                     'deviceready'
                     , function () {
@@ -85,10 +98,18 @@
             );
         }
     }
-    connectWebViewJavascriptBridge(function(njBridge){
+
+    connectWebViewJavascriptBridge(function(njBridge) {
         // 框架初始化完成调用插件能力
         alert("device ready");
         window.plugins.DicAPI.test1();
+    });
+
+    // 注册一个js函数,以便原生能够调用
+    window.NJBridge.registerHandler("functionInJavascript", function (data, responseCallback) {
+        document.getElementById("show").innerHTML = ("data from Java: = " + data);
+        var responseData = "Javascript Says Right back aka!";
+        responseCallback(responseData);
     });
 
 

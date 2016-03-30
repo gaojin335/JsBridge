@@ -2,17 +2,13 @@ package com.github.lzyzsd.jsbridge;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +19,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
 
 	private final String TAG = "BridgeWebView";
 
-	public static final String toLoadJs = "WebViewJavascriptBridge.js";
+	public static final String toLoadJs = null;//"WebViewJavascriptBridge.js";
 	Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
 	Map<String, BridgeHandler> messageHandlers = new HashMap<String, BridgeHandler>();
 	BridgeHandler defaultHandler = new DefaultHandler();

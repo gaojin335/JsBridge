@@ -12,7 +12,7 @@ import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
  * Created by gaobo on 16/3/28.
  */
 public class NJBridgeWebView extends BridgeWebView {
-    public static final String toLoadNJJs = "NJBridge.js";
+    public static final String toLoadNJJs = null;//"NJBridge.js";
 
     public NJBridgeWebView(Context context, AttributeSet attrs) {
         super(context, attrs);

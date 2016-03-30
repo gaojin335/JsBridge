@@ -36,7 +36,6 @@
             responseCallback(responseData);
         });
 
-        // 定义NJBridge类
         var nj = window.NJBridge = {
             njBridge: bridge,
             exec:function(success, error, service, action, args) {
@@ -45,6 +44,7 @@
                     , {'actionName': action, 'arguments': args}
                     , function (responseData) {
                         var respDataJO = eval("(" + responseData + ")");
+                        console.log("response data:" + responseData);
                         if (respDataJO.callbackName == "success") {
                             success(respDataJO.data);
                         } else {
@@ -52,7 +52,8 @@
                         }
                     }
                 );
-            }
+            }/*,
+            registerHandler:bridge.registerHandler*/
         };
 
         var deviceReadyEvent = document.createEvent("Events");

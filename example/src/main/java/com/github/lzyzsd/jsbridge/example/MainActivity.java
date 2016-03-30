@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
@@ -101,9 +102,9 @@ public class MainActivity extends Activity implements OnClickListener {
         webView.callHandler("functionInJs", new Gson().toJson(user), new CallBackFunction() {
             @Override
             public void onCallBack(String data) {
-
-            }
-        });
+				Toast.makeText(MainActivity.this, "js 返回的结果:" + data, Toast.LENGTH_LONG).show();
+			}
+		});
 
         webView.send("hello");
 
